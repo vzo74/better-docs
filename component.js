@@ -36,9 +36,9 @@ exports.handlers = {
       }
 
       if (path.extname(filePath) === '.jsx') {
-        if (doclet.kind !== 'function' && doclet.kind !== 'event') {
-          doclet.undocumented = true
-        }
+        // if (doclet.kind !== 'function' && doclet.kind !== 'event') {
+        //   doclet.undocumented = true
+        // }
       }
     }
   }
@@ -55,7 +55,7 @@ var parseReact = function (filePath, doclet) {
   var src = fs.readFileSync(filePath, 'UTF-8')
   var docGen
   try {
-    docGen = reactDocs.parse(src)
+    docGen = reactDocs.parse(src, reactDocs.resolver.findAllComponentDefinitions)
   } catch (error) {
     if (error.message === 'No suitable component definition found.') {
       return {
